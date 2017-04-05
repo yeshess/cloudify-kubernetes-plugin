@@ -1,4 +1,5 @@
 plugins:
+
   kubernetes:
     executor: central_deployment_agent
     package_name: cloudify-kubernetes-plugin
@@ -6,6 +7,7 @@ plugins:
     source: https://github.com/cloudify-incubator/cloudify-kubernetes-plugin/archive/1.0.0.zip
 
 data_types:
+
   cloudify.kubernetes.types.ApiOptions:
     properties:
       host:
@@ -13,19 +15,15 @@ data_types:
         required: false
         description: >
           HTTP/HTTPS URL to Kubernetes API
-
       ssl_ca_cert:
         type: string
         required: false
-
       cert_file:
         type: string
         required: false
-
       key_file:
         type: string
         required: false
-
       verify_ssl:
         type: string
         required: false
@@ -115,6 +113,7 @@ data_types:
           Kuberneres resource object specification
 
 node_types:
+
   cloudify.kubernetes.nodes.Master:
     derived_from: cloudify.nodes.Root
     properties:
@@ -185,5 +184,16 @@ node_types:
             payload: V1DeleteOptions
 
 relationships:
+
   cloudify.kubernetes.relationships.managed_by_master:
-    derived_from: cloudify.relationships.connected_to
+    derived_from: cloudify.relationships.contained_in
+
+workflows:
+
+  kubectl:
+    mapping: kubernetes.cloudify_kubernetes.workflows.kubectl
+    parameters:
+      kubectl_args:
+        type: string
+        description: >
+          Kubectl arguments to be run as a command on Kubernetes Master node
