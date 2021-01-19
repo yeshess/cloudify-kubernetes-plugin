@@ -8,3 +8,4 @@ pylint
 pytest
 # for integration and platform tests
 cloudify>=3.4.1
+bottle>=0.12.19 # not directly required, pinned by Snyk to avoid a vulnerability
